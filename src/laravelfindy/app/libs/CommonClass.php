@@ -111,7 +111,7 @@ class CommonClass
       $old = new carbon($date1);
       $late = new carbon($date2);
       if(!$old->lt($late)){
-        return '未来と過去が逆です';
+        return 'error';
       }
       $now = new carbon();
       if($now -> between($late,$old)){
@@ -126,11 +126,11 @@ class CommonClass
 
   /**
    * 過去から未来の時間の配列から今に当てはまる配列のキーを返す
-   * 
+   * 比較対象が空だったり「0000-00-00 00:00:00」が入っていた場合は飛ばして次の日付を探しに行く
    * @param $timesAry 時間と分の文字列(1130, 11:30など)
    * @return 
    */
-    public function whereIsNow($ary){
+    public function whereIsNow(array $ary){
       if(!is_array($ary)){
         return false;
       }
@@ -143,11 +143,11 @@ class CommonClass
           $date1=$ary[$i];
         }
         //$date2を探す
-        $j=$i+1; //1
-        while ($j < count($ary)) { //1 > 4
+        $j=$i+1;
+        while ($j < count($ary)) {
           if($ary[$j]!='0000-00-00 00:00:00'&&isset($ary[$j])){
             $date2=$ary[$j];
-            break 1; //日付が見つかったらループを抜ける
+            break 1; //日付が見つかったらループを1段階（while）だけ抜ける
           }
           $j++;
         }
@@ -164,6 +164,64 @@ class CommonClass
     }
       
 
+/**
+ * 32桁のランダムユニークな文字列を作成する
+ * 
+ * @param int $length 求める文字列の長さ（桁数）
+ * @param string $chars ランダム文字列に使用したい文字一覧
+ * rand()…0から32767までのランダム整数を生成
+ * uniqid()…マイクロ秒単位の現在時刻にもとづいた、ユニークなIDを取得。
+ *  第2引数でさらに線形合同法でユニークな値を追加する。
+ * md5…32文字の16進数でハッシュ値を返す
+ * 32767通りのランダム×マイクロ秒ユニークのハッシュを生成
+ */
+  public function mkran32(){
+    return md5(uniqid(rand(),true));
+  }
+
+/**
+ * $IN["PRI_ID"] = randomstr(6, '0123456789','prior_inquiry','PRI_ID');
+ * 指定された桁数、指定文字のランダム文字列を生成する
+ * （古い環境では暗号学的な強さにならない場合もあるが、ほとんどの環境は問題ない）
+ * 
+ * @param int $length 求める文字列の長さ（桁数）
+ * @param string $chars ランダム文字列に使用したい文字一覧
+ *
+ * 16進数の範囲で16桁の文字列を生成する場合
+ * $rand1 = randomstr(16, '0123456789ABCDEF');
+ * 32進数（Ｂａｓｅ３２）の範囲で16桁の文字列を生成する場合
+ * $rand2 = randomstr(16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567');
+ * 英数大小文字の範囲で16桁の文字列を生成する場合
+ * $rand3 = randomstr(16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
+ * 
+ * 第三引数に$table名とカラム名を入れると該当テーブルのカラムを生成した乱数で検索し、該当があった場合はループし、新しい乱数をつくる
+ */
+
+  public function randomstr($length, $chars){
+    $retstr = '';
+    $data = openssl_random_pseudo_bytes($length);
+    $num_chars = strlen($chars);
+    for ($i = 0; $i < $length; $i++){
+      $retstr .= substr($chars, ord(substr($data, $i, 1)) % $num_chars, 1);
+    }
+    return $retstr;
+  }
+
+  /**
+   * 配列に重複があるかどうかをチェック
+   * 戻り値 true or false
+   * 
+   */
+
+  public function isDuplicateArrayValue(array $ary){
+    $value_count = array_count_values($ary); // 各値の出現回数を数える
+    $max = max($value_count); // 最大の出現回数を取得する
+    if ($max == 1) {
+        return false;
+    } else {
+        return true;
+    }
+  }
 
 
 
@@ -174,7 +232,7 @@ class CommonClass
    * @param $per 切り上げる単位(分) 5分なら5
    * @return false or 切り上げられた DateTime オブジェクト(->fomat で自由にフォーマットして使用する)
    */
-  function strm($str,$num=50,$val='…'){
+  public function strm($str,$num=50,$val='…'){
     
     $num=$num*2+1;    
     return mb_strimwidth($str,0,$num,$val,"UTF-8");

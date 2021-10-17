@@ -69,7 +69,31 @@ class CommonClassTest extends TestCase
         $this->assertSame(2,$num);
     }
 
+    /*ランダム文字列の衝突テスト （マイクロ秒*32767通りのランダム）*/
+    public function testmkran32()
+    {
+        $randoms = array();
+        $lib = new CommonClass;
+        for ($i=0; $i < 99999; $i++) { 
+            $randoms[]=$lib ->mkran32();
+        }
+        //$randoms[]=$randoms[0];
+        $flag = $lib->isDuplicateArrayValue($randoms);
+        $this->assertSame(false,$flag);
+    }
 
+    /*ランダム文字列の衝突テスト（長さ・数字・文字列指定） */
+    public function testrandomstr()
+    {
+        $randoms = array();
+        $lib = new CommonClass;
+        for ($i=0; $i < 1000; $i++) { 
+            $randoms[]=$lib ->randomstr(7,'123456789');
+        }
+        //$randoms[]=$randoms[0];
+        $flag = $lib->isDuplicateArrayValue($randoms);
+        $this->assertSame(false,$flag);
+    }
 
     public function teststrm()
     {
