@@ -1,0 +1,13 @@
+# exe ファイルは要らない
+# *.exr
+
+# nuget.exe は必用なファイル
+# !/.nuget/nuget.exe は必用なファイル
+
+# binフォルダは要らない
+# bin/
+
+# パッケージフォルダ内の .ts ファイルは要らない
+# package/**/*.ts
+
+*.env
