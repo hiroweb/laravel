@@ -2,6 +2,7 @@
 
 namespace App\libs;
 use DateTime;
+use Carbon\Carbon;
 
 class CommonClass
 {
@@ -62,8 +63,9 @@ class CommonClass
         // フォーマット文字 i だと、 例えば1分が 2桁の 01 となる(1桁は無い）ので、整数に変換してから切り捨てる
         $ceil_num = floor(sprintf('%d', $deteObj->format('i'))/$per) *$per;
         $hour = $deteObj->format('H');
+        $date = $deteObj->format('Y-m-d');
         $have = $hour.sprintf( '%02d', $ceil_num );
-        return new DateTime($have);
+        return new DateTime($date.' '.$have);
     }
   }
 
@@ -86,6 +88,7 @@ class CommonClass
 
         // 切り上げた「分」が60になったら「時間」を1つ繰り上げる
         // 60分 -> 00分に直す
+        $date = $deteObj->format('Y-m-d');
         $hour = $deteObj->format('H');
 
         if( $ceil_num == 60 ) {
@@ -94,7 +97,7 @@ class CommonClass
         }
         $have = $hour.sprintf( '%02d', $ceil_num );
 
-        return new DateTime($have);
+        return new DateTime($date.' '.$have);
     }
   }
 

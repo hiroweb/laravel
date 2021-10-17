@@ -14,6 +14,7 @@ class CommonClassTest extends TestCase
      * php artisan make:test libs/CommonClassTest --unit
      * vendor/bin/phpunit tests/Unit/libs/CommonClassTest.php
      */
+
     public function testChkDate()
     {
         $lib = new CommonClass;
@@ -25,15 +26,15 @@ class CommonClassTest extends TestCase
     {
         $lib = new CommonClass;
         $age = $lib ->howOld('1981-12-23');
-        $this->assertSame($age,39);
+        $this->assertSame(39,$age);
     }
 
     public function testFloorPerTime()
     {
         $lib = new CommonClass;
-        $date = $lib ->floorPerTime('2021-10-16 17:24:00');
-        $this->assertIsObject($date,True);
-        $this->assertSame($date->format('Y-m-d H:i:s'),'2021-10-16 17:20:00');
+        $date = $lib ->floorPerTime('2021-10-16 17:24:00',5);
+        $this->assertIsObject($date,true);
+        $this->assertSame('2021-10-16 17:20:00',$date->format('Y-m-d H:i:s'));
     }
 
     public function testCeilPerTime()
@@ -41,7 +42,7 @@ class CommonClassTest extends TestCase
         $lib = new CommonClass;
         $date = $lib ->ceilPerTime('2021-10-16 17:24:00');
         $this->assertIsObject($date,True);
-        $this->assertSame($date->format('Y-m-d H:i:s'),'2021-10-16 17:25:00');
+        $this->assertSame('2021-10-16 17:25:00',$date->format('Y-m-d H:i:s'));
     }
 
     public function teststrm()
@@ -49,7 +50,7 @@ class CommonClassTest extends TestCase
         $lib = new CommonClass;
         $text='あいうえおかきくけこさしすせそたちつてと';
         $str = $lib ->strm($text,12,'…');
-        $this->assertSame($str,'あいうえおかきくけこさし…');
+        $this->assertSame('あいうえおかきくけこさし…',$str);
     }
 
 
