@@ -15,21 +15,21 @@ class CommonClassTest extends TestCase
      * vendor/bin/phpunit tests/Unit/libs/CommonClassTest.php
      */
 
-    public function testChkDate()
+    public function Check_StrIfDate()
     {
         $lib = new CommonClass;
         $flag = $lib ->chkDate('2021-10-16');
         $this->assertTrue($flag);
     }
 
-    public function testHowOld()
+    public function Provides_HowOldByBirthday()
     {
         $lib = new CommonClass;
         $age = $lib ->howOld('1981-12-23');
         $this->assertSame(39,$age);
     }
 
-    public function testFloorPerTime()
+    public function Provides_MinituesFloored()
     {
         $lib = new CommonClass;
         $date = $lib ->floorPerTime('2021-10-16 17:24:00',5);
@@ -37,7 +37,7 @@ class CommonClassTest extends TestCase
         $this->assertSame('2021-10-16 17:20:00',$date->format('Y-m-d H:i:s'));
     }
 
-    public function testCeilPerTime()
+    public function Provides_MinituesCeiled()
     {
         $lib = new CommonClass;
         $date = $lib ->ceilPerTime('2021-10-16 17:24:00');
@@ -46,7 +46,7 @@ class CommonClassTest extends TestCase
     }
 
 
-    public function testisNowBetween()
+    public function Check_NowIsBetweenValues()
     {
         $lib = new CommonClass;
         $date1='2021-10-17 10:00:00';
@@ -57,7 +57,7 @@ class CommonClassTest extends TestCase
     }
 
 
-    public function testwhereIsNow()
+    public function Provides_WhereIsNow()
     {
         $lib = new CommonClass;
         $date[]='2021-10-17 10:00:00';
@@ -70,7 +70,7 @@ class CommonClassTest extends TestCase
     }
 
     /*ランダム文字列の衝突テスト （マイクロ秒*32767通りのランダム）*/
-    public function testmkran32()
+    public function Check_IfRan32IsDuplicated()
     {
         $randoms = array();
         $lib = new CommonClass;
@@ -83,7 +83,7 @@ class CommonClassTest extends TestCase
     }
 
     /*ランダム文字列の衝突テスト（長さ・数字・文字列指定） */
-    public function testrandomstr()
+    public function Check_IfRamdomIsDuplicated()
     {
         $randoms = array();
         $lib = new CommonClass;
@@ -95,7 +95,7 @@ class CommonClassTest extends TestCase
         $this->assertSame(false,$flag);
     }
 
-    public function teststrm()
+    public function Provides_StrCuttedByGivenLetters()
     {
         $lib = new CommonClass;
         $text='あいうえおかきくけこさしすせそたちつてと';
