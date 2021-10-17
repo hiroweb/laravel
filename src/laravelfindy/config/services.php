@@ -29,5 +29,15 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'LINE' => [
+        'key' => env('LINE_ACCESS_TOKEN'),
+        'secret' => env('LINE_SECRET'),
+    ],
+    'Twitter' => [
+        'key' => env('TWITTER_ACCESS_TOKEN'),
+        'secret' => env('TWITTER_SECRET'),
+    ],
+    'GoogleMap' => [
+        'key' => env('GOOGLEMAP_API_KEY'),
+    ],
 ];
