@@ -45,6 +45,32 @@ class CommonClassTest extends TestCase
         $this->assertSame('2021-10-16 17:25:00',$date->format('Y-m-d H:i:s'));
     }
 
+
+    public function testisNowBetween()
+    {
+        $lib = new CommonClass;
+        $date1='2021-10-17 10:00:00';
+        $date2='2021-10-17 13:30:00';
+
+        $boole = $lib ->isNowBetween($date1,$date2);
+        $this->assertSame(false,$boole);
+    }
+
+
+    public function testwhereIsNow()
+    {
+        $lib = new CommonClass;
+        $date[]='2021-10-17 10:00:00';
+        $date[]='0000-00-00 00:00:00';
+        $date[]='2021-10-17 14:45:00';
+        $date[]='2021-10-20 14:55:00';
+
+        $num = $lib ->whereIsNow($date);
+        $this->assertSame(2,$num);
+    }
+
+
+
     public function teststrm()
     {
         $lib = new CommonClass;
@@ -52,6 +78,9 @@ class CommonClassTest extends TestCase
         $str = $lib ->strm($text,12,'…');
         $this->assertSame('あいうえおかきくけこさし…',$str);
     }
+
+
+
 
 
 }

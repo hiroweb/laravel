@@ -76,7 +76,7 @@ class CommonClass
    * @param $per 切り上げる単位(分) 5分なら5
    * @return false or 切り上げられた DateTime オブジェクト(->fomat で自由にフォーマットして使用する)
    */
-  function ceilPerTime($time, $per=5){
+  public function ceilPerTime($time, $per=5){
     // 値がない時、単位が0の時は false を返して終了する
     if( !isset($time) || !is_numeric($per) || ($per == 0 )) {
         return false;
@@ -100,6 +100,71 @@ class CommonClass
         return new DateTime($date.' '.$have);
     }
   }
+
+  /**
+   * 2つの時間の間に今があるかどうか
+   * @param $date1 $date2
+   * @return true or false
+   */
+    public function isNowBetween($date1,$date2){
+
+      $old = new carbon($date1);
+      $late = new carbon($date2);
+      if(!$old->lt($late)){
+        return '未来と過去が逆です';
+      }
+      $now = new carbon();
+      if($now -> between($late,$old)){
+        $result = True;
+      }else{
+        $result = False;
+      }
+      return $result;
+    }
+
+
+
+  /**
+   * 過去から未来の時間の配列から今に当てはまる配列のキーを返す
+   * 
+   * @param $timesAry 時間と分の文字列(1130, 11:30など)
+   * @return 
+   */
+    public function whereIsNow($ary){
+      if(!is_array($ary)){
+        return false;
+      }
+      if(count($ary)==0){
+        return false;
+      }
+      for ($i=0; $i < count($ary); $i++) {
+        //$date1を探す…iが日付だったら
+        if($ary[$i]!='0000-00-00 00:00:00'&&isset($ary[$i])){
+          $date1=$ary[$i];
+        }
+        //$date2を探す
+        $j=$i+1; //1
+        while ($j < count($ary)) { //1 > 4
+          if($ary[$j]!='0000-00-00 00:00:00'&&isset($ary[$j])){
+            $date2=$ary[$j];
+            break 1; //日付が見つかったらループを抜ける
+          }
+          $j++;
+        }
+        if($date2==NULL){
+          $result=$i;
+          break;
+        }
+        if($this->isNowBetween($date1,$date2)){
+          $result=$i;
+          break;
+        }
+      }
+      return $result;
+    }
+      
+
+
 
 
   /**
