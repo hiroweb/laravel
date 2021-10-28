@@ -1,5 +1,3 @@
-# tryout
-
 ## Docker LAMP Laravel構成
 |構成|バージョン|
 |---|---|
