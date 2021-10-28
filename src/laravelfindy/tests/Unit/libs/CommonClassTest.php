@@ -15,7 +15,7 @@ class CommonClassTest extends TestCase
      * vendor/bin/phpunit tests/Unit/libs/CommonClassTest.php
      */
 
-    public function Check_StrIfDate()
+    public function Check_StrIfDateTest()
     {
         $lib = new CommonClass;
         $flag = $lib ->chkDate('2021-10-16');

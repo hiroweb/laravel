@@ -1,5 +1,5 @@
 # exe ファイルは要らない
-# *.exr
+# *.exe
 
 # nuget.exe は必用なファイル
 # !/.nuget/nuget.exe は必用なファイル
